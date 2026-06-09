@@ -471,25 +471,59 @@ st.markdown(
     }}
     .audience-note {{ font-size: .64rem; letter-spacing: .12em; text-transform: uppercase; }}
     .creator-grid {{ display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 3rem 1.5rem; }}
-    .market-block + .market-block {{ margin-top: 7rem; padding-top: 5rem; border-top: 1px solid var(--line-light); }}
-    .market-header {{ display: flex; align-items: end; justify-content: space-between; gap: 2rem; margin-bottom: 3.5rem; }}
-    .market-header h3 {{
+    .market-block {{ border-top: 1px solid var(--line-light); }}
+    .market-block:last-of-type {{ border-bottom: 1px solid var(--line-light); }}
+    .market-summary {{
+      display: grid;
+      grid-template-columns: minmax(120px, .55fr) 2fr auto;
+      align-items: center;
+      gap: 2rem;
+      padding: 2.5rem 0;
+      cursor: pointer;
+      list-style: none;
+    }}
+    .market-summary::-webkit-details-marker {{ display: none; }}
+    .market-summary h3 {{
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
       font-size: clamp(2.5rem, 4.5vw, 4.75rem);
       font-weight: 400;
       letter-spacing: -.04em;
     }}
+    .accordion-icon {{
+      position: relative;
+      width: 2rem;
+      height: 2rem;
+      border: 1px solid var(--line-light);
+      border-radius: 50%;
+    }}
+    .accordion-icon::before,
+    .accordion-icon::after {{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: .8rem;
+      height: 1px;
+      background: var(--paper);
+      content: "";
+      transform: translate(-50%, -50%);
+      transition: transform .2s ease;
+    }}
+    .accordion-icon::after {{ transform: translate(-50%, -50%) rotate(90deg); }}
+    details[open] > .market-summary .accordion-icon::after {{ transform: translate(-50%, -50%) rotate(0); }}
+    .market-content {{ padding: 1rem 0 5rem; }}
     .us-creator-grid {{ grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 4.5rem; }}
     .de-creator-grid {{ grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 4.5rem; }}
     .platform-block {{ margin-top: 8rem; padding-top: 6rem; border-top: 1px solid var(--line-light); }}
     .platform-heading {{ margin-bottom: 5rem; }}
     .platform-heading .section-title {{ margin-top: 1rem; }}
-    .tiktok-region + .tiktok-region {{ margin-top: 5rem; }}
+    .tiktok-region {{ border-top: 1px solid var(--line-light); }}
+    .tiktok-region:last-child {{ border-bottom: 1px solid var(--line-light); }}
+    .tiktok-region .market-summary {{ grid-template-columns: minmax(120px, .55fr) 2fr auto; }}
     .tiktok-region h4 {{
-      margin: 0 0 2.5rem;
+      margin: 0;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 2rem;
+      font-size: clamp(2rem, 3.5vw, 3.5rem);
       font-weight: 400;
     }}
     .tiktok-grid {{ grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 900px; }}
@@ -615,9 +649,12 @@ st.markdown(
       .section-heading {{ display: block; }}
       .section-title {{ margin-top: 2rem; }}
       .market-intro {{ margin: 2rem 0 3.5rem; }}
-      .market-block + .market-block {{ margin-top: 5rem; padding-top: 4rem; }}
-      .market-header {{ display: block; }}
-      .market-header h3 {{ margin-top: 1.5rem; }}
+      .market-summary {{ grid-template-columns: 1fr auto; gap: .7rem 1rem; padding: 2rem 0; }}
+      .tiktok-region .market-summary {{ grid-template-columns: 1fr auto; }}
+      .market-summary .section-label {{ grid-column: 1; }}
+      .market-summary h3, .tiktok-region .market-summary h4 {{ grid-column: 1; }}
+      .market-summary .accordion-icon {{ grid-column: 2; grid-row: 1 / span 2; }}
+      .market-content {{ padding: .5rem 0 4rem; }}
       .platform-block {{ margin-top: 6rem; padding-top: 4rem; }}
       .creator-grid, .us-creator-grid, .de-creator-grid, .tiktok-grid {{ grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem 1.25rem; }}
       .creator-card h3, .creator-card p {{ min-height: 0; }}
@@ -705,10 +742,16 @@ german_creator_cards = creator_cards(GERMAN_CREATORS)
 us_creator_cards = creator_cards(US_CREATORS)
 tiktok_regions = "".join(
     f"""
-    <div class="tiktok-region">
-      <h4>{html.escape(region)}</h4>
-      <div class="creator-grid tiktok-grid">{creator_cards(creators, "TikTok")}</div>
-    </div>
+    <details class="tiktok-region">
+      <summary class="market-summary">
+        <div class="section-label">TikTok market</div>
+        <h4>{html.escape(region)}</h4>
+        <span class="accordion-icon" aria-hidden="true"></span>
+      </summary>
+      <div class="market-content">
+        <div class="creator-grid tiktok-grid">{creator_cards(creators, "TikTok")}</div>
+      </div>
+    </details>
     """
     for region, creators in TIKTOK_CREATORS.items()
 )
@@ -720,39 +763,48 @@ st.markdown(
         <div class="section-label">02 &nbsp; Creator network</div>
         <h2 class="section-title">Creators in house.</h2>
       </div>
-      <div class="market-block">
-        <div class="market-header">
+      <details class="market-block">
+        <summary class="market-summary">
           <div class="section-label">France</div>
           <h3>French market.</h3>
+          <span class="accordion-icon" aria-hidden="true"></span>
+        </summary>
+        <div class="market-content">
+          <div class="market-intro">
+            <p>A ready-to-activate French creator bench spanning technology, mobility, craftsmanship, automotive and entertainment. Open a profile to review the channel and find its public business contact details.</p>
+            <p class="audience-note">Approximate YouTube audience, June 2026.</p>
+          </div>
+          <div class="creator-grid">{french_creator_cards}</div>
         </div>
-        <div class="market-intro">
-          <p>A ready-to-activate French creator bench spanning technology, mobility, craftsmanship, automotive and entertainment. Open a profile to review the channel and find its public business contact details.</p>
-          <p class="audience-note">Approximate YouTube audience, June 2026.</p>
-        </div>
-        <div class="creator-grid">{french_creator_cards}</div>
-      </div>
-      <div class="market-block">
-        <div class="market-header">
+      </details>
+      <details class="market-block">
+        <summary class="market-summary">
           <div class="section-label">Germany</div>
           <h3>German market.</h3>
+          <span class="accordion-icon" aria-hidden="true"></span>
+        </summary>
+        <div class="market-content">
+          <div class="market-intro">
+            <p>A broad German YouTube network across outdoor adventure, farming, construction, smart homes, gadgets, solar technology, camping and vanlife.</p>
+            <p class="audience-note">Approximate YouTube audience, June 2026.</p>
+          </div>
+          <div class="creator-grid de-creator-grid">{german_creator_cards}</div>
         </div>
-        <div class="market-intro">
-          <p>A broad German YouTube network across outdoor adventure, farming, construction, smart homes, gadgets, solar technology, camping and vanlife.</p>
-          <p class="audience-note">Approximate YouTube audience, June 2026.</p>
-        </div>
-        <div class="creator-grid de-creator-grid">{german_creator_cards}</div>
-      </div>
-      <div class="market-block">
-        <div class="market-header">
+      </details>
+      <details class="market-block">
+        <summary class="market-summary">
           <div class="section-label">United States</div>
           <h3>US market.</h3>
+          <span class="accordion-icon" aria-hidden="true"></span>
+        </summary>
+        <div class="market-content">
+          <div class="market-intro">
+            <p>A practical US-market roster covering consumer technology, smart homes, engineering builds, DIY, repairs, product reviews and family-focused rural content.</p>
+            <p class="audience-note">Approximate YouTube audience, June 2026.</p>
+          </div>
+          <div class="creator-grid us-creator-grid">{us_creator_cards}</div>
         </div>
-        <div class="market-intro">
-          <p>A practical US-market roster covering consumer technology, smart homes, engineering builds, DIY, repairs, product reviews and family-focused rural content.</p>
-          <p class="audience-note">Approximate YouTube audience, June 2026.</p>
-        </div>
-        <div class="creator-grid us-creator-grid">{us_creator_cards}</div>
-      </div>
+      </details>
       <div class="platform-block">
         <div class="platform-heading">
           <div class="section-label">TikTok creator network</div>
