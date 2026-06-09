@@ -412,31 +412,7 @@ st.markdown(
       left: 7vw;
       bottom: 11vh;
       max-width: min(920px, 82vw);
-      padding: clamp(1.8rem, 3.5vw, 3.4rem);
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,.24);
-      border-radius: 34px;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,.045) 42%, rgba(0,0,0,.18)),
-        rgba(18,20,18,.32);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.28),
-        inset 0 -1px 0 rgba(255,255,255,.05),
-        0 30px 80px rgba(0,0,0,.36),
-        0 8px 24px rgba(0,0,0,.2);
-      backdrop-filter: blur(22px) saturate(145%);
-      -webkit-backdrop-filter: blur(22px) saturate(145%);
     }}
-    .hero-copy::before {{
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 12% 0%, rgba(255,255,255,.2), transparent 28%),
-        linear-gradient(115deg, transparent 52%, rgba(255,255,255,.07), transparent 72%);
-      content: "";
-      pointer-events: none;
-    }}
-    .hero-copy > * {{ position: relative; z-index: 1; }}
     .hero-copy .eyebrow {{
       display: inline-flex;
       padding: .65rem .85rem;
@@ -462,6 +438,27 @@ st.markdown(
       -webkit-background-clip: text;
       background-clip: text;
       filter: drop-shadow(0 12px 22px rgba(0,0,0,.28));
+    }}
+    .hero h1 {{
+      background:
+        linear-gradient(
+          165deg,
+          #ffffff 0%,
+          #ffffff 19%,
+          #b9bec0 34%,
+          #f8f6ef 49%,
+          #858b8e 66%,
+          #ffffff 82%,
+          #bfc3c1 100%
+        );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-stroke: 1px rgba(255,255,255,.28);
+      text-shadow:
+        0 1px 0 rgba(255,255,255,.38),
+        0 3px 0 rgba(0,0,0,.22),
+        0 14px 30px rgba(0,0,0,.5);
+      filter: drop-shadow(0 18px 30px rgba(0,0,0,.34));
     }}
     .about-title, .brands-section .section-title, .video-heading .section-title {{
       color: transparent;
@@ -706,7 +703,7 @@ st.markdown(
     @media (max-width: 820px) {{
       .eyeball-nav {{ min-height: 68px; }}
       .eyeball-links a:not(.nav-cta) {{ display: none; }}
-      .hero-copy {{ left: 5vw; right: 5vw; bottom: 7vh; max-width: none; padding: 1.5rem; border-radius: 24px; }}
+      .hero-copy {{ left: 6vw; right: 6vw; bottom: 8vh; max-width: none; }}
       .hero h1 {{ margin: 1.2rem 0 1.8rem; font-size: clamp(3.35rem, 16vw, 5rem); }}
       .hero-copy .eyebrow {{ font-size: .58rem; line-height: 1.4; }}
       .hero-actions {{ align-items: flex-start; flex-direction: column; }}
