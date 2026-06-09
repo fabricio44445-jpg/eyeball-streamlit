@@ -321,7 +321,7 @@ def email_is_configured() -> bool:
 
 st.set_page_config(
     page_title="Fabrice Klohoun | Global New Media and KOL Marketing",
-    page_icon=".",
+    page_icon="🌐",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
@@ -339,6 +339,8 @@ st.markdown(
       --paper: #f2eee5;
       --line-light: rgba(242, 238, 229, .22);
       --line-dark: rgba(22, 23, 21, .22);
+      --glass-light: rgba(255, 255, 255, .12);
+      --glass-dark: rgba(10, 12, 11, .34);
     }}
     html {{ scroll-behavior: smooth; }}
     body, .stApp {{ background: var(--paper); color: var(--ink); }}
@@ -419,6 +421,20 @@ st.markdown(
       font-weight: 400;
       letter-spacing: -.045em;
     }}
+    .hero h1, .section-dark .section-title, .contact-title {{
+      color: transparent;
+      background: linear-gradient(145deg, #ffffff 8%, #f2eee5 48%, #aaa79f 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      filter: drop-shadow(0 12px 22px rgba(0,0,0,.28));
+    }}
+    .about-title, .brands-section .section-title, .video-heading .section-title {{
+      color: transparent;
+      background: linear-gradient(145deg, #101210 10%, #3f413d 54%, #8c8e87 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      filter: drop-shadow(0 12px 20px rgba(22,23,21,.16));
+    }}
     .hero h1 {{
       margin: 1.4rem 0 2.4rem;
       font-size: clamp(4rem, 9vw, 9rem);
@@ -471,14 +487,24 @@ st.markdown(
     }}
     .audience-note {{ font-size: .64rem; letter-spacing: .12em; text-transform: uppercase; }}
     .creator-grid {{ display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 3rem 1.5rem; }}
-    .market-block {{ border-top: 1px solid var(--line-light); }}
-    .market-block:last-of-type {{ border-bottom: 1px solid var(--line-light); }}
+    .market-block {{
+      display: block;
+      margin-top: 1rem;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 24px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.11), rgba(255,255,255,.025) 45%, rgba(0,0,0,.16)),
+        var(--glass-dark);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 20px 45px rgba(0,0,0,.2);
+      backdrop-filter: blur(18px) saturate(130%);
+    }}
     .market-summary {{
       display: grid;
       grid-template-columns: minmax(120px, .55fr) 2fr auto;
       align-items: center;
       gap: 2rem;
-      padding: 2.5rem 0;
+      padding: 2.5rem 2rem;
       cursor: pointer;
       list-style: none;
     }}
@@ -489,6 +515,7 @@ st.markdown(
       font-size: clamp(2.5rem, 4.5vw, 4.75rem);
       font-weight: 400;
       letter-spacing: -.04em;
+      text-shadow: 0 2px 0 rgba(255,255,255,.14), 0 14px 25px rgba(0,0,0,.28);
     }}
     .accordion-icon {{
       position: relative;
@@ -511,22 +538,11 @@ st.markdown(
     }}
     .accordion-icon::after {{ transform: translate(-50%, -50%) rotate(90deg); }}
     details[open] > .market-summary .accordion-icon::after {{ transform: translate(-50%, -50%) rotate(0); }}
-    .market-content {{ padding: 1rem 0 5rem; }}
+    .market-content {{ padding: 1rem 2rem 5rem; border-top: 1px solid rgba(255,255,255,.1); }}
     .us-creator-grid {{ grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 4.5rem; }}
     .de-creator-grid {{ grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 4.5rem; }}
-    .platform-block {{ margin-top: 8rem; padding-top: 6rem; border-top: 1px solid var(--line-light); }}
-    .platform-heading {{ margin-bottom: 5rem; }}
-    .platform-heading .section-title {{ margin-top: 1rem; }}
-    .tiktok-region {{ border-top: 1px solid var(--line-light); }}
-    .tiktok-region:last-child {{ border-bottom: 1px solid var(--line-light); }}
-    .tiktok-region .market-summary {{ grid-template-columns: minmax(120px, .55fr) 2fr auto; }}
-    .tiktok-region h4 {{
-      margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(2rem, 3.5vw, 3.5rem);
-      font-weight: 400;
-    }}
-    .tiktok-grid {{ grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 900px; }}
+    .tiktok-block {{ margin-top: 4rem; }}
+    .tiktok-grid {{ grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 4.5rem; }}
     .creator-card {{ color: var(--paper) !important; text-align: center; text-decoration: none !important; }}
     .creator-card img {{
       width: min(150px, 100%);
@@ -542,9 +558,10 @@ st.markdown(
       font-family: Georgia, "Times New Roman", serif;
       font-size: 1.2rem;
       font-weight: 400;
+      text-shadow: 0 8px 18px rgba(0,0,0,.28);
     }}
     .creator-card p {{ min-height: 3.8em; color: rgba(242,238,229,.62); font-size: .78rem; line-height: 1.55; }}
-    .creator-card strong {{ display: block; font-family: Georgia, "Times New Roman", serif; font-size: 1.7rem; font-weight: 400; }}
+    .creator-card strong {{ display: block; font-family: Georgia, "Times New Roman", serif; font-size: 1.7rem; font-weight: 400; text-shadow: 0 8px 18px rgba(0,0,0,.3); }}
     .creator-card span {{ color: rgba(242,238,229,.56); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; }}
     .video-section {{ padding-bottom: 3rem; }}
     .brands-section {{ padding: 8rem 7vw; border-bottom: 1px solid var(--line-dark); }}
@@ -649,13 +666,11 @@ st.markdown(
       .section-heading {{ display: block; }}
       .section-title {{ margin-top: 2rem; }}
       .market-intro {{ margin: 2rem 0 3.5rem; }}
-      .market-summary {{ grid-template-columns: 1fr auto; gap: .7rem 1rem; padding: 2rem 0; }}
-      .tiktok-region .market-summary {{ grid-template-columns: 1fr auto; }}
+      .market-summary {{ grid-template-columns: 1fr auto; gap: .7rem 1rem; padding: 2rem 1.25rem; }}
       .market-summary .section-label {{ grid-column: 1; }}
-      .market-summary h3, .tiktok-region .market-summary h4 {{ grid-column: 1; }}
+      .market-summary h3 {{ grid-column: 1; }}
       .market-summary .accordion-icon {{ grid-column: 2; grid-row: 1 / span 2; }}
-      .market-content {{ padding: .5rem 0 4rem; }}
-      .platform-block {{ margin-top: 6rem; padding-top: 4rem; }}
+      .market-content {{ padding: .5rem 1.25rem 4rem; }}
       .creator-grid, .us-creator-grid, .de-creator-grid, .tiktok-grid {{ grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem 1.25rem; }}
       .creator-card h3, .creator-card p {{ min-height: 0; }}
       .brands-section {{ padding: 6rem 6vw; }}
@@ -740,20 +755,13 @@ def creator_cards(creators: list[dict[str, str]], platform: str = "YouTube") -> 
 french_creator_cards = creator_cards(FRENCH_CREATORS)
 german_creator_cards = creator_cards(GERMAN_CREATORS)
 us_creator_cards = creator_cards(US_CREATORS)
-tiktok_regions = "".join(
-    f"""
-    <details class="tiktok-region">
-      <summary class="market-summary">
-        <div class="section-label">TikTok market</div>
-        <h4>{html.escape(region)}</h4>
-        <span class="accordion-icon" aria-hidden="true"></span>
-      </summary>
-      <div class="market-content">
-        <div class="creator-grid tiktok-grid">{creator_cards(creators, "TikTok")}</div>
-      </div>
-    </details>
-    """
-    for region, creators in TIKTOK_CREATORS.items()
+tiktok_creator_cards = creator_cards(
+    [
+        creator
+        for regional_creators in TIKTOK_CREATORS.values()
+        for creator in regional_creators
+    ],
+    "TikTok",
 )
 
 st.markdown(
@@ -805,17 +813,20 @@ st.markdown(
           <div class="creator-grid us-creator-grid">{us_creator_cards}</div>
         </div>
       </details>
-      <div class="platform-block">
-        <div class="platform-heading">
-          <div class="section-label">TikTok creator network</div>
-          <h3 class="section-title">Short-form creators.</h3>
+      <details class="market-block tiktok-block">
+        <summary class="market-summary">
+          <div class="section-label">Short-form network</div>
+          <h3>TikTok creators.</h3>
+          <span class="accordion-icon" aria-hidden="true"></span>
+        </summary>
+        <div class="market-content">
+          <div class="market-intro">
+            <p>Fast-moving TikTok talent across North America, Germany and France, covering product discovery, homesteading, life hacks, smart homes and consumer technology.</p>
+            <p class="audience-note">Approximate TikTok audience, June 2026.</p>
+          </div>
+          <div class="creator-grid tiktok-grid">{tiktok_creator_cards}</div>
         </div>
-        <div class="market-intro">
-          <p>Fast-moving TikTok talent across North America, Germany and France, covering product discovery, homesteading, life hacks, smart homes and consumer technology.</p>
-          <p class="audience-note">Approximate TikTok audience, June 2026.</p>
-        </div>
-        {tiktok_regions}
-      </div>
+      </details>
     </section>
     """,
     unsafe_allow_html=True,
