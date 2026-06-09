@@ -1,0 +1,15 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.streamlit/secrets.toml
+.venv/
+venv/
+work/
+outputs/eyeball-netlify.zip
+outputs/eyeball-redesign/NETLIFY-SETUP.txt
+outputs/eyeball-redesign/index.html
+outputs/eyeball-redesign/netlify.toml
+outputs/eyeball-redesign/robots.txt
+outputs/eyeball-redesign/script.js
+outputs/eyeball-redesign/styles.css
+outputs/eyeball-redesign/success.html
