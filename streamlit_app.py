@@ -402,14 +402,49 @@ st.markdown(
     .hero-shade {{
       position: absolute;
       inset: 0;
-      background: linear-gradient(90deg, rgba(22,23,21,.86), rgba(22,23,21,.18) 72%);
+      background:
+        radial-gradient(circle at 30% 72%, rgba(255,255,255,.08), transparent 34%),
+        linear-gradient(90deg, rgba(22,23,21,.78), rgba(22,23,21,.12) 72%);
     }}
     .hero-copy {{
       position: absolute;
       z-index: 2;
       left: 7vw;
       bottom: 11vh;
-      max-width: 920px;
+      max-width: min(920px, 82vw);
+      padding: clamp(1.8rem, 3.5vw, 3.4rem);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.24);
+      border-radius: 34px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,.045) 42%, rgba(0,0,0,.18)),
+        rgba(18,20,18,.32);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.28),
+        inset 0 -1px 0 rgba(255,255,255,.05),
+        0 30px 80px rgba(0,0,0,.36),
+        0 8px 24px rgba(0,0,0,.2);
+      backdrop-filter: blur(22px) saturate(145%);
+      -webkit-backdrop-filter: blur(22px) saturate(145%);
+    }}
+    .hero-copy::before {{
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(255,255,255,.2), transparent 28%),
+        linear-gradient(115deg, transparent 52%, rgba(255,255,255,.07), transparent 72%);
+      content: "";
+      pointer-events: none;
+    }}
+    .hero-copy > * {{ position: relative; z-index: 1; }}
+    .hero-copy .eyebrow {{
+      display: inline-flex;
+      padding: .65rem .85rem;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.16);
+      backdrop-filter: blur(10px);
     }}
     .eyebrow, .section-label {{
       font-size: .7rem;
@@ -444,13 +479,26 @@ st.markdown(
     .light-button {{
       display: inline-block;
       padding: 1rem 1.4rem;
-      background: var(--paper);
+      border: 1px solid rgba(255,255,255,.6);
+      border-radius: 999px;
+      background: linear-gradient(145deg, rgba(255,255,255,.96), rgba(226,224,216,.82));
       color: var(--ink) !important;
+      box-shadow: inset 0 1px 0 #fff, 0 12px 28px rgba(0,0,0,.24);
       font-size: .72rem;
       font-weight: 700;
       letter-spacing: .12em;
       text-decoration: none !important;
       text-transform: uppercase;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }}
+    .light-button:hover {{ transform: translateY(-2px); box-shadow: inset 0 1px 0 #fff, 0 18px 34px rgba(0,0,0,.3); }}
+    .hero .text-link {{
+      padding: .9rem 1.1rem;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 999px;
+      background: rgba(255,255,255,.07);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.14);
+      backdrop-filter: blur(10px);
     }}
     .text-link {{
       padding-bottom: .35rem;
@@ -658,7 +706,9 @@ st.markdown(
     @media (max-width: 820px) {{
       .eyeball-nav {{ min-height: 68px; }}
       .eyeball-links a:not(.nav-cta) {{ display: none; }}
-      .hero-copy {{ left: 6vw; right: 6vw; }}
+      .hero-copy {{ left: 5vw; right: 5vw; bottom: 7vh; max-width: none; padding: 1.5rem; border-radius: 24px; }}
+      .hero h1 {{ margin: 1.2rem 0 1.8rem; font-size: clamp(3.35rem, 16vw, 5rem); }}
+      .hero-copy .eyebrow {{ font-size: .58rem; line-height: 1.4; }}
       .hero-actions {{ align-items: flex-start; flex-direction: column; }}
       .section {{ padding: 6rem 6vw; }}
       .about-grid {{ grid-template-columns: 1fr; }}
