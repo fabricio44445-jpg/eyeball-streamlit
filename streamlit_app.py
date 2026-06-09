@@ -12,7 +12,7 @@ from streamlit.errors import StreamlitSecretNotFoundError
 ROOT = Path(__file__).parent
 ASSETS = ROOT / "outputs" / "eyeball-redesign" / "assets"
 
-CREATORS = [
+FRENCH_CREATORS = [
     {
         "name": "Tesla Riviera",
         "category": "EVs, Tesla and electromobility",
@@ -54,6 +54,65 @@ CREATORS = [
         "audience": "~9.35M",
         "url": "https://www.youtube.com/@Amixem",
         "image": "amixem.webp",
+    },
+]
+
+US_CREATORS = [
+    {
+        "name": "JoelsterG4K",
+        "category": "Consumer tech, gaming and entertainment reviews",
+        "audience": "~60.6K",
+        "url": "https://www.youtube.com/@JoelsterG4k/videos",
+        "image": "joelster-g4k.webp",
+    },
+    {
+        "name": "This Smart House",
+        "category": "Smart homes, Home Assistant and automation",
+        "audience": "~33.8K",
+        "url": "https://www.youtube.com/@ThisSmartHouse",
+        "image": "this-smart-house.webp",
+    },
+    {
+        "name": "Viny B",
+        "category": "Engineering, fabrication and project builds",
+        "audience": "~114K",
+        "url": "https://www.youtube.com/@VinyB57/videos",
+        "image": "viny-b.webp",
+    },
+    {
+        "name": "DoItYourselfDad",
+        "category": "DIY, repairs and practical home projects",
+        "audience": "~187K",
+        "url": "https://www.youtube.com/@DoItYourselfDad/videos",
+        "image": "do-it-yourself-dad.webp",
+    },
+    {
+        "name": "The 10 Acre Woods",
+        "category": "Farm life, animal rescue and family education",
+        "audience": "~56.9K",
+        "url": "https://www.youtube.com/channel/UCirFhr1Yk2ULP5cniE96S1g/videos",
+        "image": "ten-acre-woods.webp",
+    },
+    {
+        "name": "Wanderer001 Reviews",
+        "category": "In-depth tech and smart-home reviews",
+        "audience": "~35.4K",
+        "url": "https://www.youtube.com/@Wanderer001_Reviews/videos",
+        "image": "wanderer-reviews.webp",
+    },
+    {
+        "name": "Shiny Tech Things",
+        "category": "Tech repair, servers, AI builds and reviews",
+        "audience": "~50.1K",
+        "url": "https://www.youtube.com/@ShinyTechThings/videos",
+        "image": "shiny-tech-things.webp",
+    },
+    {
+        "name": "Don Does Stuff",
+        "category": "Repairs, renovation and hands-on how-to projects",
+        "audience": "~2.01K",
+        "url": "https://www.youtube.com/@DonDoesStuff/videos",
+        "image": "don-does-stuff.webp",
     },
 ]
 
@@ -268,6 +327,16 @@ st.markdown(
     }}
     .audience-note {{ font-size: .64rem; letter-spacing: .12em; text-transform: uppercase; }}
     .creator-grid {{ display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 3rem 1.5rem; }}
+    .market-block + .market-block {{ margin-top: 7rem; padding-top: 5rem; border-top: 1px solid var(--line-light); }}
+    .market-header {{ display: flex; align-items: end; justify-content: space-between; gap: 2rem; margin-bottom: 3.5rem; }}
+    .market-header h3 {{
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.5rem, 4.5vw, 4.75rem);
+      font-weight: 400;
+      letter-spacing: -.04em;
+    }}
+    .us-creator-grid {{ grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 4.5rem; }}
     .creator-card {{ color: var(--paper) !important; text-align: center; text-decoration: none !important; }}
     .creator-card img {{
       width: min(150px, 100%);
@@ -342,7 +411,7 @@ st.markdown(
       text-transform: uppercase;
     }}
     @media (max-width: 1120px) and (min-width: 821px) {{
-      .creator-grid {{ grid-template-columns: repeat(3, minmax(0, 1fr)); }}
+      .creator-grid, .us-creator-grid {{ grid-template-columns: repeat(3, minmax(0, 1fr)); }}
     }}
     @media (max-width: 820px) {{
       .eyeball-nav {{ min-height: 68px; }}
@@ -355,7 +424,10 @@ st.markdown(
       .section-heading {{ display: block; }}
       .section-title {{ margin-top: 2rem; }}
       .market-intro {{ margin: 2rem 0 3.5rem; }}
-      .creator-grid {{ grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem 1.25rem; }}
+      .market-block + .market-block {{ margin-top: 5rem; padding-top: 4rem; }}
+      .market-header {{ display: block; }}
+      .market-header h3 {{ margin-top: 1.5rem; }}
+      .creator-grid, .us-creator-grid {{ grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem 1.25rem; }}
       .creator-card h3, .creator-card p {{ min-height: 0; }}
       .video-heading, .contact-shell {{ padding: 6rem 6vw 2rem; }}
       div[data-testid="stTabs"] {{ padding: 0 6vw 5rem; }}
@@ -415,7 +487,8 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-creator_cards = "".join(
+def creator_cards(creators: list[dict[str, str]]) -> str:
+    return "".join(
     f"""
     <a class="creator-card" href="{creator['url']}" target="_blank" rel="noopener noreferrer">
       <img src="{image_data(creator['image'])}" alt="{html.escape(creator['name'])} channel profile">
@@ -425,21 +498,42 @@ creator_cards = "".join(
       <span>YouTube subscribers</span>
     </a>
     """
-    for creator in CREATORS
-)
+        for creator in creators
+    )
+
+
+french_creator_cards = creator_cards(FRENCH_CREATORS)
+us_creator_cards = creator_cards(US_CREATORS)
 
 st.markdown(
     f"""
     <section class="section section-dark" id="creators">
       <div class="section-heading">
-        <div class="section-label">02 &nbsp; French market</div>
+        <div class="section-label">02 &nbsp; Creator network</div>
         <h2 class="section-title">Creators in house.</h2>
       </div>
-      <div class="market-intro">
-        <p>A ready-to-activate French creator bench spanning technology, mobility, craftsmanship, automotive and entertainment. Open a profile to review the channel and find its public business contact details.</p>
-        <p class="audience-note">Approximate YouTube audience, June 2026.</p>
+      <div class="market-block">
+        <div class="market-header">
+          <div class="section-label">France</div>
+          <h3>French market.</h3>
+        </div>
+        <div class="market-intro">
+          <p>A ready-to-activate French creator bench spanning technology, mobility, craftsmanship, automotive and entertainment. Open a profile to review the channel and find its public business contact details.</p>
+          <p class="audience-note">Approximate YouTube audience, June 2026.</p>
+        </div>
+        <div class="creator-grid">{french_creator_cards}</div>
       </div>
-      <div class="creator-grid">{creator_cards}</div>
+      <div class="market-block">
+        <div class="market-header">
+          <div class="section-label">United States</div>
+          <h3>US market.</h3>
+        </div>
+        <div class="market-intro">
+          <p>A practical US-market roster covering consumer technology, smart homes, engineering builds, DIY, repairs, product reviews and family-focused rural content.</p>
+          <p class="audience-note">Approximate YouTube audience, June 2026.</p>
+        </div>
+        <div class="creator-grid us-creator-grid">{us_creator_cards}</div>
+      </div>
     </section>
     """,
     unsafe_allow_html=True,
